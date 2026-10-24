@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yash Gupta — Personal Profile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="chatbot.css">
+</head>
+<body>
+  <div class="page-bg" aria-hidden="true"></div>
+
+  <header class="hero">
+    <p class="hero-label">Personal Profile</p>
+    <h1>Yash Gupta</h1>
+    <p class="hero-lead">
+    I am a Student at JECRC University
+    </p>
+  </header>
+
+  <main>
+    <section class="about" id="about" aria-labelledby="about-heading">
+      <h2 id="about-heading">About</h2>
+      <p>
+        PLACEHOLDER about paragraph. Write a few sentences about your background,
+        interests, and what you are currently working on.
+      </p>
+      <p>
+        PLACEHOLDER second about paragraph. Add anything else visitors should know —
+        location, education, or goals.
+      </p>
+    </section>
+
+    <section class="skills" id="skills" aria-labelledby="skills-heading">
+      <h2 id="skills-heading">Skills</h2>
+      <p class="section-lead">PLACEHOLDER skills intro — tools and strengths you rely on most.</p>
+      <ul class="skills-list">
+        <li>Python</li>
+        <li>HTMl</li>
+        <li>C/C++</li>
+        <li>Node.js</li>
+        <li>CSS</li>
+      </ul>
+    </section>
+
+    <section class="projects" id="projects" aria-labelledby="projects-heading">
+      <h2 id="projects-heading">Projects</h2>
+      <p class="section-lead">PLACEHOLDER projects intro — selected work you want to highlight.</p>
+      <ul class="projects-list">
+        <li>
+          <a href="https://PLACEHOLDER-project-one.example.com">PLACEHOLDER Project One Title</a>
+          <span>PLACEHOLDER short description of project one.</span>
+        </li>
+        <li>
+          <a href="https://PLACEHOLDER-project-two.example.com">PLACEHOLDER Project Two Title</a>
+          <span>PLACEHOLDER short description of project two.</span>
+        </li>
+        <li>
+          <a href="https://PLACEHOLDER-project-three.example.com">PLACEHOLDER Project Three Title</a>
+          <span>PLACEHOLDER short description of project three.</span>
+        </li>
+      </ul>
+    </section>
+  </main>
+  <section id="weather">
+    <h2>Weather</h2>
+
+    <input
+        type="text"
+        id="cityInput"
+        placeholder="Enter a city"
+    >
+
+    <button id="weatherButton">
+        Get Weather
+    </button>
+
+    <div id="weatherResult">
+        Enter a city to see the weather.
+    </div>
+</section>
+
+<section id="aiChatSection" class="ai-chat">
+  <h2>Ask My AI Assistant</h2>
+
+  <p>
+    Ask questions about this portfolio,
+    projects, and technologies.
+  </p>
+
+  <div
+    id="chatMessages"
+    aria-live="polite"
+  ></div>
+
+  <div class="chat-controls">
+    <input
+      type="text"
+      id="userInput"
+      placeholder="Ask a question..."
+    />
+
+    <button id="sendButton" type="button">
+      Send
+    </button>
+  </div>
+
+  <p id="chatStatus" role="status"></p>
+
+  <p class="chat-note">
+    AI chat is available during the local
+    classroom demonstration only.
+  </p>
+</section>
+
+
+  <footer class="site-footer">
+    <p>Contact: <a href="mailto:PLACEHOLDER.email@example.com">PLACEHOLDER.email@example.com</a></p>
+  </footer>
+  <button id="themeToggle">Switch to Dark Mode</button>
+  <script src="script.js"></script>
+  <script src="config.js"></script>
+<script src="chatbot.js"></script>
+</body>
+</html>
