@@ -1,126 +1,140 @@
-const chatInput = document.getElementById("userInput");
-const chatButton = document.getElementById("sendButton");
-const chatMessages = document.getElementById("chatMessages");
-const chatStatus = document.getElementById("chatStatus");
 
-// Temperature for our experiment
-let chatTemperature = 0.2;
+(() => {
+  // Prevent duplicate initialization if this script is loaded twice.
+  if (window.__portfolioChatInitialized) return;
+  window.__portfolioChatInitialized = true;
 
-function showChatMessage(role, text) {
-  const message = document.createElement("div");
+  const form = document.getElementById("chatForm");
+  const input = document.getElementById("chatInput");
+  const messages = document.getElementById("chatMessages");
+  const statusText = document.getElementById("chatStatus");
+  const sendButton = document.getElementById("chatSend");
 
-  message.className =
-    "chat-message " +
-    (role === "user" ? "chat-user" : "chat-assistant");
+  if (!form || !input || !messages || !statusText || !sendButton) {
+    console.error("Chatbot initialization failed: required HTML elements are missing.");
+    return;
+  }
 
-  message.textContent = text;
-  chatMessages.appendChild(message);
+  const conversationHistory = [];
+  let isSending = false;
 
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-}
+  function showMessage(text, kind) {
+    const p = document.createElement("p");
+    p.className = kind === "user" ? "user-message" : "bot-message";
+    p.textContent = text;
+    messages.appendChild(p);
+    messages.scrollTop = messages.scrollHeight;
+  }
 
-// Disable chat when local configuration is absent
-if (typeof CONFIG === "undefined" ||
-    !CONFIG.apiKey ||
-    CONFIG.apiKey === "YOUR_PRIVATE_GROQ_KEY") {
-  chatButton.disabled = true;
-  chatStatus.textContent =
-    "AI chat is available in the local demonstration only.";
-}
+  function getPortfolioContext() {
+    return ["#about", "#skills", "#projects"]
+      .map((selector) => {
+        const section = document.querySelector(selector);
+        if (!section) return "";
 
-async function sendChatMessage() {
-  if (chatButton.disabled) return;
+        const copy = section.cloneNode(true);
 
-  const question = chatInput.value.trim();
+        copy.querySelectorAll("li").forEach((item) => {
+          if (/placeholder/i.test(item.textContent)) {
+            item.remove();
+          }
+        });
 
-  if (!question) return;
+        return copy.innerText.replace(/\s+/g, " ").trim();
+      })
+      .filter(Boolean)
+      .join("\n\n");
+  }
 
-  showChatMessage("user", question);
-  chatInput.value = "";
+  function isSimpleGreeting(text) {
+    return /^(hi|hello|hey|hii|hiii|yo|good morning|good afternoon|good evening|howdy)[!.?,\s]*$/i
+      .test(text.trim());
+  }
 
-  chatButton.disabled = true;
-  chatStatus.textContent = "AI is thinking...";
+  function saveHistory(question, answer) {
+    conversationHistory.push(
+      { role: "user", content: question },
+      { role: "assistant", content: answer }
+    );
 
-  try {
-    const response = await fetch(
-      CONFIG.baseUrl.replace(/\/$/, "") +
-      "/chat/completions",
-      {
+    // Keep only the latest user/assistant pair.
+    if (conversationHistory.length > 2) {
+      conversationHistory.splice(0, conversationHistory.length - 2);
+    }
+  }
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    if (isSending) return;
+
+    const question = input.value.trim();
+
+    if (!question) {
+      statusText.textContent = "Please type a question.";
+      return;
+    }
+
+    isSending = true;
+    sendButton.disabled = true;
+
+    showMessage(question, "user");
+    input.value = "";
+
+    if (isSimpleGreeting(question)) {
+      const greeting =
+        "Hi! 👋 Ask me about my skills, projects, or background.";
+
+      showMessage(greeting, "bot");
+      saveHistory(question, greeting);
+      statusText.textContent = "";
+
+      isSending = false;
+      sendButton.disabled = false;
+      return;
+    }
+
+    statusText.textContent = "Thinking...";
+
+    try {
+      const response = await fetch("/api/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer " + CONFIG.apiKey
         },
         body: JSON.stringify({
-          model: CONFIG.model,
-          temperature: chatTemperature,
-          messages: [
-            {
-              role: "system",
-              content:
-                "You are an AI assistant for a portfolio " +
-                "website that includes a weather application. " +
-                "Answer questions about HTML, CSS, JavaScript, " +
-                "APIs, and the projects described to you. " +
-                "Do not invent personal information. " +
-                "Keep replies under 60 words."
-            },
-            {
-              role: "user",
-              content: question
-            }
-          ]
-        })
+          question,
+          portfolioContext: getPortfolioContext(),
+          history: conversationHistory.slice(-2),
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.error || `Chat request failed (${response.status}).`
+        );
       }
-    );
 
-    if (response.status === 429) {
-      throw new Error("RATE_LIMIT");
+      const answer = data.answer;
+
+      if (typeof answer !== "string" || !answer.trim()) {
+        throw new Error("The AI returned an empty answer.");
+      }
+
+      saveHistory(question, answer);
+
+      // Display the AI answer exactly once.
+      showMessage(answer, "bot");
+      statusText.textContent = "";
+    } catch (error) {
+      console.error("Chat error:", error);
+      statusText.textContent =
+        error.message || "Chat unavailable. Please try again.";
+    } finally {
+      isSending = false;
+      sendButton.disabled = false;
     }
-
-    if (!response.ok) {
-      throw new Error("API_ERROR");
-    }
-
-    const data = await response.json();
-
-    const answer = data.choices?.[0]?.message?.content;
-
-    if (typeof answer !== "string" || !answer.trim()) {
-      throw new Error("INVALID_RESPONSE");
-    }
-
-    showChatMessage("assistant", answer);
-
-  } catch (error) {
-    console.error("Chat error:", error.message);
-
-    if (error.message === "RATE_LIMIT") {
-      showChatMessage(
-        "assistant",
-        "Too many requests. Please wait and try again."
-      );
-    } else if (!navigator.onLine) {
-      showChatMessage(
-        "assistant",
-        "No internet connection. Please reconnect."
-      );
-    } else {
-      showChatMessage(
-        "assistant",
-        "AI service unavailable. Please try again."
-      );
-    }
-  } finally {
-    chatButton.disabled = false;
-    chatStatus.textContent = "";
-  }
-}
-
-chatButton.addEventListener("click", sendChatMessage);
-
-chatInput.addEventListener("keydown", function(event) {
-  if (event.key === "Enter") {
-    sendChatMessage();
-  }
-});
+  });
+})();

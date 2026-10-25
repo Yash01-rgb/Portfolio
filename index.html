@@ -9,120 +9,228 @@
   <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="chatbot.css">
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem("portfolio-theme");
+        var dark = saved === "dark" || (!saved && window.matchMedia("(prefers-color-scheme: dark)").matches);
+        if (dark) document.documentElement.classList.add("dark-mode");
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
   <div class="page-bg" aria-hidden="true"></div>
 
   <header class="hero">
+    <button
+      id="themeToggle"
+      class="theme-toggle"
+      type="button"
+      aria-pressed="false"
+      aria-label="Toggle color theme"
+    >
+      Switch to Dark Mode
+    </button>
     <p class="hero-label">Personal Profile</p>
     <h1>Yash Gupta</h1>
     <p class="hero-lead">
-    I am a Student at JECRC University
+      I am a Student at JECRC University
     </p>
   </header>
 
   <main>
     <section class="about" id="about" aria-labelledby="about-heading">
       <h2 id="about-heading">About</h2>
-      <p>
-        PLACEHOLDER about paragraph. Write a few sentences about your background,
-        interests, and what you are currently working on.
-      </p>
-      <p>
-        PLACEHOLDER second about paragraph. Add anything else visitors should know —
-        location, education, or goals.
-      </p>
+      <div class="about-layout">
+        <div class="profile-frame">
+          <img
+            class="profile-image"
+            src="images/Profile.jpeg"
+            alt="Placeholder portrait of Yash Gupta"
+          >
+        </div>
+        <div class="about-copy">
+          <p>
+            Hello! I’m a Computer Science Engineering student at JECRC University, Jaipur, Rajasthan, India. I’m interested in Data Science, Artificial Intelligence, and using technology to solve real-world problems.
+          </p>
+          <p>
+            I’m currently learning Python, C++, and data analysis while improving my programming and problem-solving skills through practice and projects. I enjoy exploring new technologies and learning how data can help us make better decisions.
+          </p>
+          <p>
+            My goal is to become a skilled Data Scientist, gain practical experience through internships and projects, and use my knowledge to build useful solutions. I believe in continuous learning and improving every day.
+          </p>
+        </div>
+      </div>
     </section>
 
     <section class="skills" id="skills" aria-labelledby="skills-heading">
       <h2 id="skills-heading">Skills</h2>
-      <p class="section-lead">PLACEHOLDER skills intro — tools and strengths you rely on most.</p>
       <ul class="skills-list">
         <li>Python</li>
-        <li>HTMl</li>
+        <li>HTML</li>
         <li>C/C++</li>
-        <li>Node.js</li>
+        <li>JavaScript</li>
         <li>CSS</li>
       </ul>
     </section>
 
     <section class="projects" id="projects" aria-labelledby="projects-heading">
       <h2 id="projects-heading">Projects</h2>
-      <p class="section-lead">PLACEHOLDER projects intro — selected work you want to highlight.</p>
-      <ul class="projects-list">
-        <li>
-          <a href="https://PLACEHOLDER-project-one.example.com">PLACEHOLDER Project One Title</a>
-          <span>PLACEHOLDER short description of project one.</span>
+      <div class="project-search">
+        <label class="visually-hidden" for="projectSearch">Search projects</label>
+        <input
+          id="projectSearch"
+          type="search"
+          placeholder="Search projects by title, description, or technology"
+          autocomplete="off"
+          aria-controls="projects-list"
+        />
+      </div>
+      <p id="projectSearchEmpty" class="project-search-empty" hidden role="status" aria-live="polite">
+        No projects match your search.
+      </p>
+      <ul id="projects-list" class="projects-list">
+        <li class="project-card" data-technologies="C++ Python">
+          <h3 class="project-title">
+            <a href="https://github.com/Yash01-rgb/Python-Basics-25BCON1115" target="_blank" rel="noopener noreferrer">
+              C++ to Python Program Conversion
+            </a>
+          </h3>
+          <p class="project-description">
+            Three beginner programming tasks converted from C++ to Python, covering factorial calculation, Fibonacci series generation, and mapping C++ structures to Python dictionaries.
+          </p>
+          <p class="project-tech">C++ · Python</p>
+          <p class="project-links">
+            Repositories:
+            <a href="https://github.com/Yash01-rgb/Python-Basics-25BCON1115" target="_blank" rel="noopener noreferrer">Factorial</a>
+            <a href="https://github.com/Yash01-rgb/Python-basics-25bcon1115-fibonacci" target="_blank" rel="noopener noreferrer">Fibonacci</a>
+            <a href="https://github.com/Yash01-rgb/Python-basics-25bcon1115-struct-to-dictionary" target="_blank" rel="noopener noreferrer">Struct to Dictionary</a>
+          </p>
         </li>
-        <li>
-          <a href="https://PLACEHOLDER-project-two.example.com">PLACEHOLDER Project Two Title</a>
-          <span>PLACEHOLDER short description of project two.</span>
+        <li class="project-card" data-technologies="Python">
+          <h3 class="project-title">
+            <a href="https://github.com/Yash01-rgb/Buggy-Python-25BCON1115" target="_blank" rel="noopener noreferrer">
+              Python Debugging and Testing
+            </a>
+          </h3>
+          <p class="project-description">
+            A Python assignment focused on spotting and fixing bugs in existing code. A test file is included to confirm the corrected program behaves as expected.
+          </p>
+          <p class="project-tech">Python</p>
+          <p class="project-links">
+            <a href="https://github.com/Yash01-rgb/Buggy-Python-25BCON1115" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </p>
         </li>
-        <li>
-          <a href="https://PLACEHOLDER-project-three.example.com">PLACEHOLDER Project Three Title</a>
-          <span>PLACEHOLDER short description of project three.</span>
+        <li class="project-card" data-technologies="Python">
+          <h3 class="project-title">
+            <a href="https://github.com/Yash01-rgb/Messy-Python_code-25BCON1115" target="_blank" rel="noopener noreferrer">
+              Python Code Refactoring with Cursor AI
+            </a>
+          </h3>
+          <p class="project-description">
+            A Python exercise that uses Cursor AI to tidy the structure and readability of a messy program, without changing its original output or intended behavior.
+          </p>
+          <p class="project-tech">Python</p>
+          <p class="project-links">
+            <a href="https://github.com/Yash01-rgb/Messy-Python_code-25BCON1115" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </p>
+        </li>
+        <li class="project-card" data-technologies="HTML CSS JavaScript">
+          <h3 class="project-title">
+            <a href="https://github.com/Yash01-rgb/quiz-25BCON1115" target="_blank" rel="noopener noreferrer">
+              Queez
+            </a>
+          </h3>
+          <p class="project-description">
+            A quiz web app built with HTML, JavaScript, and CSS. The HTML and JavaScript were written independently, and Cursor AI was used for the CSS styling.
+          </p>
+          <p class="project-tech">HTML · CSS · JavaScript</p>
+          <p class="project-links">
+            <a href="https://github.com/Yash01-rgb/quiz-25BCON1115" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </p>
+        </li>
+        <li class="project-card" data-technologies="HTML CSS JavaScript">
+          <h3 class="project-title">
+            <a href="https://github.com/Yash01-rgb/Reading_list" target="_blank" rel="noopener noreferrer">
+              Reading Book App
+            </a>
+          </h3>
+          <p class="project-description">
+            A compact web app for tracking books you have read and saving reading progress, built with HTML, CSS, and JavaScript.
+          </p>
+          <p class="project-tech">HTML · CSS · JavaScript</p>
+          <p class="project-links">
+            <a href="https://github.com/Yash01-rgb/Reading_list" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </p>
         </li>
       </ul>
     </section>
-  </main>
-  <section id="weather">
-    <h2>Weather</h2>
 
-    <input
-        type="text"
-        id="cityInput"
-        placeholder="Enter a city"
-    >
+    <section class="contact" id="contact" aria-labelledby="contact-heading">
+      <h2 id="contact-heading">Contact</h2>
+      <ul class="contact-list">
+        <li class="contact-card">
+          <span class="contact-label">Email</span>
+          <a href="mailto:yashgupta8992@gmail.com">yashgupta8992@gmail.com</a>
+        </li>
+        <li class="contact-card">
+          <span class="contact-label">GitHub</span>
+          <a href="https://github.com/Yash01-rgb" target="_blank" rel="noopener noreferrer">Yash01-rgb</a>
+        </li>
+      </ul>
+    </section>
 
-    <button id="weatherButton">
-        Get Weather
-    </button>
-
-    <div id="weatherResult">
+    <section class="weather" id="weather" aria-labelledby="weather-heading">
+      <h2 id="weather-heading">Weather</h2>
+      <p class="section-lead">
+        Type a city such as Jaipur to see the current conditions.
+      </p>
+      <div class="weather-controls">
+        <label class="visually-hidden" for="cityInput">City</label>
+        <input
+          type="text"
+          id="cityInput"
+          placeholder="Enter a city, e.g. Jaipur"
+          autocomplete="off"
+        >
+        <button id="weatherButton" class="action-button" type="button">
+          Get Weather
+        </button>
+      </div>
+      <div id="weatherResult">
         Enter a city to see the weather.
-    </div>
-</section>
+      </div>
+    </section>
 
-<section id="aiChatSection" class="ai-chat">
-  <h2>Ask My AI Assistant</h2>
-
-  <p>
-    Ask questions about this portfolio,
-    projects, and technologies.
-  </p>
-
-  <div
-    id="chatMessages"
-    aria-live="polite"
-  ></div>
-
-  <div class="chat-controls">
-    <input
-      type="text"
-      id="userInput"
-      placeholder="Ask a question..."
-    />
-
-    <button id="sendButton" type="button">
-      Send
-    </button>
-  </div>
-
-  <p id="chatStatus" role="status"></p>
-
-  <p class="chat-note">
-    AI chat is available during the local
-    classroom demonstration only.
-  </p>
-</section>
-
+    <section id="aiChatSection" class="ai-chat" aria-labelledby="ai-chat-heading">
+      <h2 id="ai-chat-heading">Ask My AI Assistant</h2>
+      <p class="section-lead">
+        Ask about this portfolio, projects, and technologies.
+        You can also ask for live weather, for example:
+        “weather in Jaipur”.
+      </p>
+      <div id="chatMessages" aria-live="polite"></div>
+      <form id="chatForm" class="chat-controls">
+        <label class="visually-hidden" for="chatInput">Ask a question</label>
+        <input
+          type="text"
+          id="chatInput"
+          placeholder="Ask a question..."
+          autocomplete="off"
+        >
+        <button id="chatSend" class="action-button" type="submit">
+          Send
+        </button>
+      </form>
+      <p id="chatStatus" role="status"></p>
+    </section>
+  </main>
 
   <footer class="site-footer">
-    <p>Contact: <a href="mailto:PLACEHOLDER.email@example.com">PLACEHOLDER.email@example.com</a></p>
   </footer>
-  <button id="themeToggle">Switch to Dark Mode</button>
-  <script src="script.js"></script>
   <script src="config.js"></script>
-<script src="chatbot.js"></script>
+  <script src="script.js"></script>
+  <script src="chatbot.js"></script>
 </body>
 </html>

@@ -1,0 +1,79 @@
+      <section id="projects" aria-labelledby="projects-heading">
+        <h2 id="projects-heading">Projects</h2>
+        <div class="project-search">
+          <label class="visually-hidden" for="projectSearch">Search projects</label>
+          <input
+            id="projectSearch"
+            type="search"
+            placeholder="Search projects by title, description, or technology"
+            autocomplete="off"
+            aria-controls="projects-list"
+          />
+        </div>
+        <p id="projectSearchEmpty" class="project-search-empty" hidden>
+          No projects match your search.
+        </p>
+        <ul id="projects-list" class="projects-list">
+          <li class="project-card" data-technologies="C++ Python">
+            <h3 class="project-title">
+              <a href="https://github.com/Yash01-rgb/Python-Basics-25BCON1115" target="_blank" rel="noopener noreferrer">
+                C++ to Python Program Conversion
+              </a>
+            </h3>
+            <p class="project-description">
+              A collection of three basic programming exercises converted from C++ to Python, covering factorial calculation, Fibonacci series generation, and the conversion of C++ structures into Python dictionaries.
+            </p>
+            <p class="project-tech">C++ · Python</p>
+            <p class="project-links">
+              Repositories:
+              <a href="https://github.com/Yash01-rgb/Python-Basics-25BCON1115" target="_blank" rel="noopener noreferrer">Factorial</a>
+              <a href="https://github.com/Yash01-rgb/Python-basics-25bcon1115-fibonacci" target="_blank" rel="noopener noreferrer">Fibonacci</a>
+              <a href="https://github.com/Yash01-rgb/Python-basics-25bcon1115-struct-to-dictionary" target="_blank" rel="noopener noreferrer">Struct to Dictionary</a>
+            </p>
+          </li>
+          <li class="project-card" data-technologies="Python">
+            <h3 class="project-title">
+              <a href="https://github.com/Yash01-rgb/Buggy-Python-25BCON1115" target="_blank" rel="noopener noreferrer">
+                Python Debugging and Testing
+              </a>
+            </h3>
+            <p class="project-description">
+              A Python programming assignment focused on identifying and correcting errors in existing code. The project also includes a test file to verify the corrected program's behavior and check whether it works as expected.
+            </p>
+            <p class="project-tech">Python</p>
+          </li>
+          <li class="project-card" data-technologies="Python">
+            <h3 class="project-title">
+              <a href="https://github.com/Yash01-rgb/Messy-Python_code-25BCON1115" target="_blank" rel="noopener noreferrer">
+                Python Code Refactoring with Cursor AI
+              </a>
+            </h3>
+            <p class="project-description">
+              A Python program focused on improving the structure and readability of an existing messy Python program using Cursor AI, while preserving its original output and intended behavior.
+            </p>
+            <p class="project-tech">Python</p>
+          </li>
+          <li class="project-card" data-technologies="HTML CSS JavaScript">
+            <h3 class="project-title">
+              <a href="https://github.com/Yash01-rgb/quiz-25BCON1115" target="_blank" rel="noopener noreferrer">
+                Queez
+              </a>
+            </h3>
+            <p class="project-description">
+              A quiz-based web project built using HTML, JavaScript, and CSS, with the initial HTML and JavaScript developed independently and Cursor AI used to create the CSS styling.
+            </p>
+            <p class="project-tech">HTML · CSS · JavaScript</p>
+          </li>
+          <li class="project-card" data-technologies="HTML CSS JavaScript">
+            <h3 class="project-title">
+              <a href="https://github.com/Yash01-rgb/Reading_list" target="_blank" rel="noopener noreferrer">
+                Reading Book App
+              </a>
+            </h3>
+            <p class="project-description">
+              A web application for keeping track of books read and saving reading progress, built using HTML, CSS, and JavaScript.
+            </p>
+            <p class="project-tech">HTML · CSS · JavaScript</p>
+          </li>
+        </ul>
+      </section>
